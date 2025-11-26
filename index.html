@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajoke-foodstufStore</title>
+  <style>
+    body {
+      background: #000;
+      color: gold;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header, footer {
+      background: gold;
+      color: black;
+      padding: 1em 0;
+      text-align: center;
+    }
+    nav {
+      margin-bottom: 2em;
+    }
+    nav a {
+      color: black;
+      margin: 0 1em;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    nav a.active {
+      text-decoration: underline;
+    }
+    section {
+      display: none;
+      padding: 2em;
+      max-width: 900px;
+      margin: auto;
+    }
+    section.active {
+      display: block;
+    }
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2em;
+    }
+    .product {
+      background: #222;
+      padding: 1em;
+      border-radius: 8px;
+      color: gold;
+      text-align: center;
+      width: 200px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    button {
+      background: gold;
+      color: #000;
+      border: none;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-top: 1em;
+    }
+    button:hover {
+      background: #fff087;
+    }
+    ul {
+      color: gold;
+      list-style-type: disc;
+      margin-left: 2em;
+    }
+    #cart-list {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ajoke-foodstuf Store</h1>
+    <nav>
+      <a href="#" class="active" onclick="showSection('home', this)">Home</a>
+      <a href="#" onclick="showSection('products', this)">Products</a>
+      <a href="#" onclick="showSection('about', this)">About Us</a>
+      <a href="#" onclick="showSection('contact', this)">Contact</a>
+      <a href="#" onclick="showSection('cart', this)">Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+  </header>
+
+  <section id="home" class="active">
+    <h2>Welcome to Ajoke-foodstuf Store!</h2>
+    <p>Your one-stop shop for quality foodstuff: rice, flours, oil and more – delivered to your doorstep!</p>
+  </section>
+
+  <section id="products">
+    <h2>Our Products</h2>
+    <div class="products" id="product-list">
+      <div class="product"><h3>Indian Rice</h3><button onclick="addToCart('Indian Rice')">Add to Cart</button></div>
+      <div class="product"><h3>Thailand Rice</h3><button onclick="addToCart('Thailand Rice')">Add to Cart</button></div>
+      <div class="product"><h3>Yamflour / Elubo</h3><button onclick="addToCart('Yamflour / Elubo')">Add to Cart</button></div>
+      <div class="product"><h3>Tapioca</h3><button onclick="addToCart('Tapioca')">Add to Cart</button></div>
+      <div class="product"><h3>Indomie</h3><button onclick="addToCart('Indomie')">Add to Cart</button></div>
+      <div class="product"><h3>Palm Oil</h3><button onclick="addToCart('Palm Oil')">Add to Cart</button></div>
+      <div class="product"><h3>G-Oil</h3><button onclick="addToCart('G-Oil')">Add to Cart</button></div>
+      <div class="product"><h3>Spag</h3><button onclick="addToCart('Spag')">Add to Cart</button></div>
+      <div class="product"><h3>Beans</h3><button onclick="addToCart('Beans')">Add to Cart</button></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p> Ajoke-foodstuf Store is dedicated to bringing you the freshest and highest quality food items at affordable prices. We focus on customer satisfaction and fast delivery.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:olakunletaofeeq94@gmail.com" style="color:gold;">olakunletaofeeq94@gmail.com</a></p>
+    <p>Phone: 08148174225</p>
+  </section>
+
+  <section id="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-list"></ul>
+    <button onclick="clearCart()">Clear Cart</button>
+  </section>
+
+  <footer>
+    <p>© 2025 Ajoke-foodstuff</p>
+  </footer>
+
+  <script>
+    // Simple section navigation
+    function showSection(id, el) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      // Nav active class
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      // Show cart count on Cart link
+      if (id === 'cart') renderCart();
+    }
+
+    // Cart logic (local only)
+    let cart = [];
+    function addToCart(item) {
+      cart.push(item);
+      document.getElementById('cart-count').innerText = cart.length;
+      alert(item + ' added to cart!');
+    }
+    function renderCart() {
+      const ul = document.getElementById('cart-list');
+      ul.innerHTML = '';
+      if (cart.length === 0) {
+        ul.innerHTML = '<li>Your cart is empty.</li>';
+      } else {
+        cart.forEach((item, idx) => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          ul.appendChild(li);
+        });
+      }
+      document.getElementById('cart-count').innerText = cart.length;
+    }
+    function clearCart() {
+      cart = [];
+      renderCart();
+      alert('Cart cleared.');
+    }
+  </script>
+</body>
+</html>
